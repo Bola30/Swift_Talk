@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "885016612643",
+    "project_id": "swift-talk-2",
+    "storage_bucket": "swift-talk-2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:885016612643:android:b806c2ea3d86fd62100696",
+        "android_client_info": {
+          "package_name": "com.example.swift_talk_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvUQE8oMJ5BnTzANltMDCUJVrujyKFqOk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
