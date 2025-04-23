@@ -38,6 +38,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.0
+  flutter_native_splash: ^2.4.6
   google_sign_in: ^6.3.0
   intl_phone_field: ^3.2.0
 
@@ -79,3 +80,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+
+flutter_native_splash:
+  color: "#ffffff" # لون الخلفية
+  image: assets\images\splash.png # مسار صورة شاشة البداية
+  android: true # تمكين شاشة البداية للأندرويد
+  ios: true # تمكين شاشة البداية لـ iOS
+  web: false # تعطيل شاشة البداية للويب
+  android_gravity: center # طريقة عرض الصورة (اختياري)
+

@@ -9,26 +9,24 @@ class CustomTextFormField extends StatelessWidget {
   final bool obscureText; // Whether to hide the text (for passwords)
   final IconData? prefixIcon; // IconData to show before text
   final Widget? suffixIcon; // Widget (e.g., IconButton) to show after text
-  final VoidCallback? onSuffixIconPressed; // Action for suffix icon
   final int? maxLength; // Max length for the input field
 
   const CustomTextFormField({
-    Key? key,
+    super.key,
     required this.labelText,
     required this.controller,
     this.validator,
     this.keyboardType = TextInputType.text,
-    this.obscureText = false,
+    required this.obscureText,
     this.prefixIcon,
     this.suffixIcon,
-    this.onSuffixIconPressed,
     this.maxLength,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: const TextStyle(fontSize: 22),
+      style: const TextStyle(fontSize: 22, color: Colors.black),
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
@@ -37,19 +35,25 @@ class CustomTextFormField extends StatelessWidget {
         labelText: labelText,
         labelStyle: Theme.of(context).textTheme.bodyMedium,
         prefixIcon: prefixIcon != null
-            ? Icon(prefixIcon, color: Colors.deepPurple)
+            ? Icon(prefixIcon, color: AppInfo.kPrimaryColor2)
             : null,
         suffixIcon: suffixIcon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: const BorderSide(
-            color: AppColors.kPrimaryColor3,
+            color: AppInfo.kPrimaryColor2, // Default border coAppInfo.kPrimaryColor2
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: const BorderSide(
-            color: AppColors.kPrimaryColor2,
+            color: Colors.pink, // Border color changes to pink on focus
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(
+            color: AppInfo.kPrimaryColor2, // Border color rAppInfo.kPrimaryColor2 when enabled
           ),
         ),
         counterText: '', // Hides the character counter if maxLength is set
@@ -58,4 +62,3 @@ class CustomTextFormField extends StatelessWidget {
     );
   }
 }
-

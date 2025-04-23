@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:swift_talk_2/core/utils/theme.dart';
-import 'package:swift_talk_2/pages/home_page.dart';
+import 'package:swift_talk_2/pages/chat_page.dart';
 import 'package:swift_talk_2/pages/logIn_page.dart';
+
 import 'package:swift_talk_2/pages/signup_page.dart';
 
 import 'firebase_options.dart';
@@ -32,7 +33,7 @@ class SwiftTalk extends StatelessWidget {
           routes: {
             'LoginPage': (context) => LoginPage(),
             'SignupPage': (context) => SignUpPage(),
-            'homePage': (context) => HomePage(),
+            'ChatPage': (context) => ChatPage(),
           },
           debugShowCheckedModeBanner: false,
           theme: CustomTheme.lightTheme,

@@ -68,7 +68,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.kPrimaryColor,
+      backgroundColor: AppInfo.kPrimaryColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -78,11 +78,11 @@ class _SignUpPageState extends State<SignUpPage> {
               children: [
                 const SizedBox(height: 30),
 
-                Image.asset('assets/images/Logo.png', height: 200, width: 250),
+                Image.asset(AppInfo.kLogo, height: 200, width: 250),
 
                 const SizedBox(height: 20),
 
-                Text("Sign Up", style: Theme.of(context).textTheme.bodyLarge),
+                Text("Sign Up", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppInfo.kPrimaryColor2)),
 
                 const SizedBox(height: 20),
 
@@ -92,7 +92,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       decoration: BoxDecoration(
-                        border: Border.all(color: AppColors.kPrimaryColor2),
+                        border: Border.all(color: AppInfo.kPrimaryColor2),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Theme(
@@ -146,7 +146,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             return 'Phone number must be at least 9 digits';
                           }
                           return null;
-                        },
+                        }, obscureText: false,
                       ),
                     ),
                   ],
@@ -161,17 +161,16 @@ class _SignUpPageState extends State<SignUpPage> {
                   keyboardType: TextInputType.emailAddress,
                   prefixIcon: Icons.email,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    final emailRegex = RegExp(
-                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-                    );
-                    if (!emailRegex.hasMatch(value)) {
-                      return 'Please enter a valid email address';
-                    }
-                    return null;
-                  },
+                  if (value == null || value.isEmpty) {
+    return 'Please enter your email';
+  }
+  final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+  if (!emailRegex.hasMatch(value)) {
+    return 'Please enter a valid email address';
+  }
+  return null; 
+}, obscureText: false,
+          
                 ),
 
                 const SizedBox(height: 15),
@@ -186,7 +185,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       _obscurePassword
                           ? Icons.visibility
                           : Icons.visibility_off,
-                      color: AppColors.kPrimaryColor2,
+                      color: AppInfo.kPrimaryColor2,
                     ),
                     onPressed: () {
                       setState(() {
@@ -208,7 +207,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       return 'Password must contain at least one number';
                     }
                     return null;
-                  },
+                  }, obscureText: _obscurePassword,
                 ),
 
                 const SizedBox(height: 30),
@@ -217,7 +216,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ElevatedButton(
                   onPressed: _isLoading ? null : _handleSignUp,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.kPrimaryColor2,
+                    backgroundColor: AppInfo.kPrimaryColor2,
                     maximumSize: const Size(100, 63),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -257,7 +256,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: Text(
                         ' LogIn',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.kPrimaryColor2,
+                          color: AppInfo.kPrimaryColor2,
                         ),
                       ),
                     ),

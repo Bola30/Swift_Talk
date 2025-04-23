@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (mounted) {
-        Navigator.pushReplacementNamed(context, 'homePage');
+        Navigator.pushReplacementNamed(context, 'ChatPage');
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.kPrimaryColor,
+      backgroundColor: AppInfo.kPrimaryColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -81,11 +81,11 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const SizedBox(height: 70),
 
-                Image.asset('assets/images/Logo.png', height: 200, width: 250),
+                Image.asset(AppInfo.kLogo, height: 200, width: 250),
 
                 const SizedBox(height: 30),
 
-                Text("LogIn", style: Theme.of(context).textTheme.bodyLarge),
+                Text("LogIn", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppInfo.kPrimaryColor2)),
 
                 const SizedBox(height: 20),
                 // Email Field
@@ -105,10 +105,11 @@ class _LoginPageState extends State<LoginPage> {
                       return 'Please enter a valid email address';
                     }
                     return null;
-                  },
+                  }, obscureText: false,
                 ),
 
                 const SizedBox(height: 15),
+                // Password Field
                 CustomTextFormField(
                   labelText: "Password",
                   controller: _passwordController,
@@ -118,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                       _obscurePassword
                           ? Icons.visibility
                           : Icons.visibility_off,
-                      color: AppColors.kPrimaryColor2,
+                      color: AppInfo.kPrimaryColor2,
                     ),
                     onPressed: () {
                       setState(() {
@@ -140,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                       return 'Password must contain at least one number';
                     }
                     return null;
-                  },
+                  }, obscureText: _obscurePassword,
                 ),
 
                 const SizedBox(height: 30),
@@ -148,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                 ElevatedButton(
                   onPressed: _isLoading ? null : _handleLogin,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.kPrimaryColor2,
+                    backgroundColor: AppInfo.kPrimaryColor2,
                     maximumSize: const Size(100, 63),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -187,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: Text(
                         ' Sign Up',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.kPrimaryColor2,
+                          color: AppInfo.kPrimaryColor2,
                         ),
                       ),
                     ),
