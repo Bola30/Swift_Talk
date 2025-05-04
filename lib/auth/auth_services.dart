@@ -13,7 +13,7 @@ class AuthService {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      throw e; // Handle errors in the calling method
+      rethrow; // Handle errors in the calling method
     }
   }
   // Create user with email and password

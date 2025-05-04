@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:swift_talk_2/core/utils/theme.dart';
 import 'package:swift_talk_2/pages/chat_page.dart';
 import 'package:swift_talk_2/pages/logIn_page.dart';
-
 import 'package:swift_talk_2/pages/signup_page.dart';
 
 import 'firebase_options.dart';

@@ -147,6 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 30),
 
                 ElevatedButton(
+                  
                   onPressed: _isLoading ? null : _handleLogin,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppInfo.kPrimaryColor2,
@@ -158,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child:
                       _isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
+                          ? const CircularProgressIndicator(color: AppInfo.kPrimaryColor2)
                           : const Text(
                             'LogIn',
                             style: TextStyle(
@@ -166,6 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.white,
                               fontWeight: FontWeight.w200,
                               fontFamily: 'PTSerif',
+                              
                             ),
                           ),
                 ),

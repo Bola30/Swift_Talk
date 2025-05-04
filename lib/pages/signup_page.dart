@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:swift_talk_2/core/utils/costants.dart';
 import 'package:swift_talk_2/widgets/textField.dart';
 import '../auth/auth_services.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -225,7 +224,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   child:
                       _isLoading
-                          ? const CircularProgressIndicator(color: Colors.white)
+                          ? const CircularProgressIndicator(color: AppInfo.kPrimaryColor2)
                           : const Text(
                             'Sign Up',
                             style: TextStyle(
