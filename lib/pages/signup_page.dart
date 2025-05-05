@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swift_talk_2/core/utils/costants.dart';
 import 'package:swift_talk_2/widgets/textField.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import '../auth/auth_services.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -20,6 +21,7 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _obscurePassword = true;
   String _selectedCountryCode = '+20';
   final List<String> _countryCodes = ['+20', '+966', '+1', '+44'];
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -41,27 +43,53 @@ class _SignUpPageState extends State<SignUpPage> {
       );
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Account created successfully! Please verify your email.',
-            ),
-            backgroundColor: Colors.green,
-          ),
-        );
-        Navigator.pushReplacementNamed(context, 'homePage');
+        _showSuccessDialog();
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString()), backgroundColor: Colors.red),
-        );
+        _showErrorDialog(e.toString());
       }
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
       }
     }
+  }
+
+  void _showSuccessDialog() {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      animType: AnimType.bottomSlide,
+      title: 'Account Created',
+      desc:
+          'Your account has been created successfully! Please verify your email.',
+      descTextStyle: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+      btnOkOnPress: () {
+        Navigator.pushReplacementNamed(context, 'ChatPage');
+      },
+      btnOkColor: Colors.green,
+    ).show();
+  }
+
+  void _showErrorDialog(String message) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.bottomSlide,
+      title: 'Sign Up Error',
+      descTextStyle: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+
+      desc: message,
+      btnOkOnPress: () {},
+      btnOkColor: Colors.red,
+    ).show();
   }
 
   @override
@@ -81,7 +109,12 @@ class _SignUpPageState extends State<SignUpPage> {
 
                 const SizedBox(height: 20),
 
-                Text("Sign Up", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppInfo.kPrimaryColor2)),
+                Text(
+                  "Sign Up",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppInfo.kPrimaryColor2,
+                  ),
+                ),
 
                 const SizedBox(height: 20),
 
@@ -99,7 +132,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           context,
                         ).copyWith(canvasColor: Colors.white),
                         child: DropdownButton<String>(
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'PTSerif',
                             color: Colors.black,
                             fontWeight: FontWeight.w700,
@@ -145,7 +178,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             return 'Phone number must be at least 9 digits';
                           }
                           return null;
-                        }, obscureText: false,
+                        },
+                        obscureText: false,
                       ),
                     ),
                   ],
@@ -160,16 +194,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   keyboardType: TextInputType.emailAddress,
                   prefixIcon: Icons.email,
                   validator: (value) {
-                  if (value == null || value.isEmpty) {
-    return 'Please enter your email';
-  }
-  final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
-  if (!emailRegex.hasMatch(value)) {
-    return 'Please enter a valid email address';
-  }
-  return null; 
-}, obscureText: false,
-          
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    final emailRegex = RegExp(
+                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                    );
+                    if (!emailRegex.hasMatch(value)) {
+                      return 'Please enter a valid email address';
+                    }
+                    return null;
+                  },
+                  obscureText: false,
                 ),
 
                 const SizedBox(height: 15),
@@ -206,7 +242,8 @@ class _SignUpPageState extends State<SignUpPage> {
                       return 'Password must contain at least one number';
                     }
                     return null;
-                  }, obscureText: _obscurePassword,
+                  },
+                  obscureText: _obscurePassword,
                 ),
 
                 const SizedBox(height: 30),
@@ -224,7 +261,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   child:
                       _isLoading
-                          ? const CircularProgressIndicator(color: AppInfo.kPrimaryColor2)
+                          ? const CircularProgressIndicator(
+                            color: AppInfo.kPrimaryColor2,
+                          )
                           : const Text(
                             'Sign Up',
                             style: TextStyle(

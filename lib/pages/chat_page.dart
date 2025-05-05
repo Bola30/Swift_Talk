@@ -12,6 +12,8 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  final _controller = ScrollController();
+
   CollectionReference messages = FirebaseFirestore.instance.collection(
     "messages",
   );
@@ -21,14 +23,13 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: messages.snapshots(),
+      stream: messages.orderBy('createdAt', descending: true).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<Message> messagesList = [];
           for (int i = 0; i < snapshot.data!.docs.length; i++) {
             messagesList.add(Message.fromJson(snapshot.data!.docs[i]));
           }
-          print(snapshot.data!.docs[0]['messages']);
           return Scaffold(
             appBar: AppBar(
               shadowColor: AppInfo.kPrimaryColor4,
@@ -54,16 +55,10 @@ class _ChatPageState extends State<ChatPage> {
             ),
             body: Column(
               children: [
-               /*  Expanded(
-                  child: ListView.builder(
-                    itemCount: messagesList.length,
-                    itemBuilder: (context, index) {
-                      return ChatBubleForFriend(friendmessage: messagesList[index]);
-                    },
-                  ),
-                ), */
                 Expanded(
                   child: ListView.builder(
+                    reverse: true,
+                    controller: _controller,
                     itemCount: messagesList.length,
                     itemBuilder: (context, index) {
                       return ChatBuble(message: messagesList[index]);
@@ -78,10 +73,6 @@ class _ChatPageState extends State<ChatPage> {
                       Expanded(
                         child: TextField(
                           controller: controller,
-                          onSubmitted: (data) {
-                            messages.add({'messages': data});
-                            controller.clear();
-                          },
                           style: const TextStyle(
                             fontSize: 18,
                             color: Colors.black,
@@ -113,11 +104,22 @@ class _ChatPageState extends State<ChatPage> {
                         child: IconButton(
                           icon: const Icon(Icons.send, color: Colors.white),
                           onPressed: () {
-                            /*    if (_message.text.trim().isNotEmpty) {
-                        // Add your logic to send the message
-                        print("Message Sent: ${_message.text}");
-                        _message.clear(); // Clear the input field after sending
-                      } */
+                            final data = controller.text.trim();
+                            if (data.isNotEmpty) {
+                              messages.add({
+                                'messages': data,
+                                'createdAt': DateTime.now(),
+                              });
+                              controller.clear();
+                            }
+                            _controller.animateTo(
+                              0,
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeIn,
+                            );
+                            /*                             FocusScope.of(
+                              context,
+                            ).unfocus(); */ // Close the keyboard
                           },
                         ),
                       ),
@@ -133,12 +135,7 @@ class _ChatPageState extends State<ChatPage> {
           return Scaffold(
             body: Container(
               child: Center(
-                child: Text(
-                  'Loading...',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: AppInfo.kPrimaryColor2,
-                  ),
-                ),
+                child: CircularProgressIndicator(color: AppInfo.kPrimaryColor2),
               ),
             ),
           );

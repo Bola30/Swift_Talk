@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:swift_talk_2/auth/auth_services.dart';
 import 'package:swift_talk_2/core/utils/costants.dart';
 import 'package:swift_talk_2/widgets/textField.dart';
+import 'package:awesome_dialog/awesome_dialog.dart'; // استيراد مكتبة awesome_dialog
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -60,12 +61,30 @@ class _LoginPageState extends State<LoginPage> {
           default:
             errorMessage = 'An unexpected error occurred. Please try again.';
         }
+
+        // إظهار الرسالة باستخدام awesome_dialog
+        _showErrorDialog(errorMessage);
       }
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
       }
     }
+  }
+
+  void _showErrorDialog(String message) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.bottomSlide,
+      title: 'Login Error',
+      desc: message,
+      btnOkOnPress: () {},
+      btnOkColor: Colors.red,
+      descTextStyle: TextStyle(color: Colors.white),
+      titleTextStyle: TextStyle(color: Colors.red , fontWeight: FontWeight.bold)
+      
+    ).show();
   }
 
   @override
@@ -129,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter a password';
+                      return  'Please enter a password';
                     }
                     if (value.length < 8) {
                       return 'Password must be at least 8 characters';
@@ -147,7 +166,6 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 30),
 
                 ElevatedButton(
-                  
                   onPressed: _isLoading ? null : _handleLogin,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppInfo.kPrimaryColor2,
@@ -157,19 +175,17 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 15),
                   ),
-                  child:
-                      _isLoading
-                          ? const CircularProgressIndicator(color: AppInfo.kPrimaryColor2)
-                          : const Text(
-                            'LogIn',
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w200,
-                              fontFamily: 'PTSerif',
-                              
-                            ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator(color: AppInfo.kPrimaryColor2)
+                      : const Text(
+                          'LogIn',
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w200,
+                            fontFamily: 'PTSerif',
                           ),
+                        ),
                 ),
 
                 const SizedBox(height: 10),
