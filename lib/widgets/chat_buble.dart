@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:swift_talk_2/core/utils/costants.dart';
+import 'package:swift_talk_2/models/messages.dart';
 
 class ChatBuble extends StatelessWidget {
-  const ChatBuble({super.key});
+  const ChatBuble({super.key ,required this.message});
+
+  final Message message;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +22,15 @@ class ChatBuble extends StatelessWidget {
           ),
           color: AppInfo.kPrimaryColor2,
         ),
-        child: Text('Ia\'m a new user ', style: TextStyle(color: Colors.white)),
+        child: Text(message.textMessage , style: TextStyle(color: Colors.white),),// models
       ),
     );
   }
 }
 
 class ChatBubleForFriend extends StatelessWidget {
-  const ChatBubleForFriend({super.key});
+  const ChatBubleForFriend({super.key , required this.friendmessage});
+  final Message friendmessage;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +47,7 @@ class ChatBubleForFriend extends StatelessWidget {
           ),
           color: AppInfo.kPrimaryColor4,
         ),
-        child: Text('Ia\'m a new user', style: TextStyle(color: Colors.white)),
+        child: Text(friendmessage.textMessage , style: TextStyle(color: Colors.white),),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:swift_talk_2/core/utils/costants.dart';
+import 'package:swift_talk_2/models/messages.dart';
 import 'package:swift_talk_2/widgets/chat_buble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -19,12 +20,15 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot>(
-      future: messages.get(),
+    return StreamBuilder<QuerySnapshot>(
+      stream: messages.snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          List<Message> messagesList = [];
+          for (int i = 0; i < snapshot.data!.docs.length; i++) {
+            messagesList.add(Message.fromJson(snapshot.data!.docs[i]));
+          }
           print(snapshot.data!.docs[0]['messages']);
-
           return Scaffold(
             appBar: AppBar(
               shadowColor: AppInfo.kPrimaryColor4,
@@ -50,11 +54,19 @@ class _ChatPageState extends State<ChatPage> {
             ),
             body: Column(
               children: [
+               /*  Expanded(
+                  child: ListView.builder(
+                    itemCount: messagesList.length,
+                    itemBuilder: (context, index) {
+                      return ChatBubleForFriend(friendmessage: messagesList[index]);
+                    },
+                  ),
+                ), */
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 15,
+                    itemCount: messagesList.length,
                     itemBuilder: (context, index) {
-                      return const ChatBuble();
+                      return ChatBuble(message: messagesList[index]);
                     },
                   ),
                 ),
@@ -118,7 +130,18 @@ class _ChatPageState extends State<ChatPage> {
         } else if (snapshot.hasError == true) {
           return Scaffold(body: Container(child: Center(child: Text('404'))));
         } else {
-          return Scaffold(body: Container(child: Center(child: Text('Loading...' , style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppInfo.kPrimaryColor2),))));
+          return Scaffold(
+            body: Container(
+              child: Center(
+                child: Text(
+                  'Loading...',
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: AppInfo.kPrimaryColor2,
+                  ),
+                ),
+              ),
+            ),
+          );
         }
       },
     );
