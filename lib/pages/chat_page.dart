@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:swift_talk_2/core/utils/costants.dart';
 import 'package:swift_talk_2/models/messages.dart';
 import 'package:swift_talk_2/widgets/chat_buble.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatPage extends StatefulWidget {
@@ -20,8 +21,14 @@ class _ChatPageState extends State<ChatPage> {
 
   final TextEditingController controller = TextEditingController();
 
+  Future<void> _logout() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacementNamed(context, 'LoginPage');
+  }
+
   @override
   Widget build(BuildContext context) {
+    var email = ModalRoute.of(context)!.settings.arguments;
     return StreamBuilder<QuerySnapshot>(
       stream: messages.orderBy('createdAt', descending: true).snapshots(),
       builder: (context, snapshot) {
@@ -32,14 +39,14 @@ class _ChatPageState extends State<ChatPage> {
           }
           return Scaffold(
             appBar: AppBar(
-              shadowColor: AppInfo.kPrimaryColor4,
+              shadowColor: Colors.black,
               backgroundColor: const Color(0xFF792ef2),
               centerTitle: true,
               elevation: 2,
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 60),
                   Text(
                     "SwiftTalk",
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -52,6 +59,13 @@ class _ChatPageState extends State<ChatPage> {
                   Image.asset(AppInfo.kLogo3, height: 60, width: 60),
                 ],
               ),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.logout, color: AppInfo.kPrimaryColor),
+                  onPressed: _logout,
+                  tooltip: 'Logout',
+                ),
+              ],
             ),
             body: Column(
               children: [
@@ -61,7 +75,11 @@ class _ChatPageState extends State<ChatPage> {
                     controller: _controller,
                     itemCount: messagesList.length,
                     itemBuilder: (context, index) {
-                      return ChatBuble(message: messagesList[index]);
+                      return messagesList[index].id == email
+                          ? ChatBuble(message: messagesList[index])
+                          : ChatBubleForFriend(
+                            friendmessage: messagesList[index],
+                          );
                     },
                   ),
                 ),
@@ -109,6 +127,7 @@ class _ChatPageState extends State<ChatPage> {
                               messages.add({
                                 'messages': data,
                                 'createdAt': DateTime.now(),
+                                'id': email,
                               });
                               controller.clear();
                             }
@@ -130,13 +149,11 @@ class _ChatPageState extends State<ChatPage> {
             ),
           );
         } else if (snapshot.hasError == true) {
-          return Scaffold(body: Container(child: Center(child: Text('404'))));
+          return Scaffold(body: Center(child: Text('404')));
         } else {
           return Scaffold(
-            body: Container(
-              child: Center(
-                child: CircularProgressIndicator(color: AppInfo.kPrimaryColor2),
-              ),
+            body: Center(
+              child: CircularProgressIndicator(color: AppInfo.kPrimaryColor2),
             ),
           );
         }

@@ -39,7 +39,11 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (mounted) {
-        Navigator.pushReplacementNamed(context, 'ChatPage');
+        Navigator.pushReplacementNamed(
+          context,
+          'ChatPage',
+          arguments: _emailController.text.trim(),
+        );
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
@@ -82,8 +86,7 @@ class _LoginPageState extends State<LoginPage> {
       btnOkOnPress: () {},
       btnOkColor: Colors.red,
       descTextStyle: TextStyle(color: Colors.white),
-      titleTextStyle: TextStyle(color: Colors.red , fontWeight: FontWeight.bold)
-      
+      titleTextStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
     ).show();
   }
 
@@ -104,7 +107,12 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 30),
 
-                Text("LogIn", style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppInfo.kPrimaryColor2)),
+                Text(
+                  "LogIn",
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: AppInfo.kPrimaryColor2,
+                  ),
+                ),
 
                 const SizedBox(height: 20),
                 // Email Field
@@ -124,7 +132,8 @@ class _LoginPageState extends State<LoginPage> {
                       return 'Please enter a valid email address';
                     }
                     return null;
-                  }, obscureText: false,
+                  },
+                  obscureText: false,
                 ),
 
                 const SizedBox(height: 15),
@@ -148,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return  'Please enter a password';
+                      return 'Please enter a password';
                     }
                     if (value.length < 8) {
                       return 'Password must be at least 8 characters';
@@ -160,7 +169,8 @@ class _LoginPageState extends State<LoginPage> {
                       return 'Password must contain at least one number';
                     }
                     return null;
-                  }, obscureText: _obscurePassword,
+                  },
+                  obscureText: _obscurePassword,
                 ),
 
                 const SizedBox(height: 30),
@@ -175,17 +185,20 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 15),
                   ),
-                  child: _isLoading
-                      ? const CircularProgressIndicator(color: AppInfo.kPrimaryColor2)
-                      : const Text(
-                          'LogIn',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w200,
-                            fontFamily: 'PTSerif',
+                  child:
+                      _isLoading
+                          ? const CircularProgressIndicator(
+                            color: AppInfo.kPrimaryColor2,
+                          )
+                          : const Text(
+                            'LogIn',
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w200,
+                              fontFamily: 'PTSerif',
+                            ),
                           ),
-                        ),
                 ),
 
                 const SizedBox(height: 10),
