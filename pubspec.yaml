@@ -81,9 +81,9 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
 flutter_native_splash:
-  color: "#ffffff" # لون الخلفية
-  image: assets\images\splash.png # مسار صورة شاشة البداية
-  android: true # تمكين شاشة البداية للأندرويد
-  ios: true # تمكين شاشة البداية لـ iOS
-  web: false # تعطيل شاشة البداية للويب
-  android_gravity: center # طريقة عرض الصورة (اختياري)
+  color: "#ffffff" 
+  image: assets\images\splash.png 
+  android: true 
+  ios: true 
+  web: false 
+  android_gravity: center
