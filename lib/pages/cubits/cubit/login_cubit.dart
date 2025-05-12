@@ -19,7 +19,8 @@ class LoginCubit extends Cubit<LoginState> {
       String errorMessage;
       switch (e.code) {
         case 'user-not-found':
-          errorMessage = 'No user found for this email. Please check your email.';
+          errorMessage =
+              'No user found for this email. Please check your email.';
           break;
         case 'wrong-password':
           errorMessage = 'Incorrect password. Please try again.';

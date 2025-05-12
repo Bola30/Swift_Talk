@@ -178,7 +178,7 @@ class LoginPage extends StatelessWidget {
                             child:
                                 isLoading
                                     ? const CircularProgressIndicator(
-                                      color: Colors.white,
+                                      color: AppInfo.kPrimaryColor2,
                                     )
                                     : const Text(
                                       'LogIn',
