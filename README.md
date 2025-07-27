@@ -1,16 +1,26 @@
-# swift_talk_2
+# 💬 Swift Talk
 
-A new Flutter project.
+Swift Talk is a modern and responsive real-time chat application built using Flutter and Firebase.
 
-## Getting Started
+## 📽️ Demo Video
+[Watch Demo](https://drive.google.com/file/d/1bo3it0LFBTUlv_nUMbPIYOuhFqlkwjMR/view?usp=drive_link)
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
 
-A few resources to get you started if this is your first Flutter project:
+- 🔐 User Authentication (Sign up & Login) via Firebase Auth  
+- 💬 Real-time messaging using Firebase Firestore  
+- 🧑‍🤝‍🧑 Supports multiple users & live conversations  
+- 📱 Clean and modern UI with responsive design  
+- 🕒 Displays message timestamps and sender information  
+- 🔥 Firebase backend integration (Firestore, Auth)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🛠️ Tech Stack
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Flutter** (Frontend UI/UX)  
+- **Firebase Auth** (User authentication)  
+- **Firebase Firestore** (Database for messages)  
+- **Provider** / **State Management** (Optional if used)  
+- **Dart**
+
+## 📁 Project Structure
+
