@@ -22,5 +22,4 @@ Swift Talk is a modern and responsive real-time chat application built using Flu
 - **Provider** / **State Management** (Optional if used)  
 - **Dart**
 
-## 📁 Project Structure
 
